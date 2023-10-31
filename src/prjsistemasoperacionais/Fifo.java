@@ -23,6 +23,11 @@ public class Fifo extends Algoritmo {
 
     @Override
     public void exec() {
+        System.out.println("***********************************\n"
+                + "******** ESCALONADOR  FIFO ********\n"
+                + "-----------------------------------\n"
+                + "------- INICIANDO SIMULACAO -------\n"
+                + "-----------------------------------");
         while (true) {
             System.out.println("********** TEMPO " + instante + " *************");
 
@@ -73,6 +78,7 @@ public class Fifo extends Algoritmo {
 
             // Exibir processo na CPU
             System.out.println("CPU: " + atual.nome + "(" + (atual.duracao - atual.temp) + ")");
+            calcTempoEspera();
 
             // Aumenta o tempo do processo
             atual.temp++;
@@ -86,5 +92,12 @@ public class Fifo extends Algoritmo {
         System.out.println("-----------------------------------");
         System.out.println("------- Encerrando simulacao ------");
         System.out.println("-----------------------------------");
+
+        System.out.println("\n");
+        System.out.println("Tempo de espera:");
+        for (Processo proc : processos) {
+            System.out.println(proc.nome + ": " + proc.tempEspera);
+        }
+        System.out.println("Tempo de espera médio: " + getTempoEsperaMedio());
     }
 }

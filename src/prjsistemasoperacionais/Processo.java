@@ -1,6 +1,5 @@
 package prjsistemasoperacionais;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Processo {
@@ -10,6 +9,7 @@ public class Processo {
     public int chegada;
     public List<Integer> interrupcao;
     public int temp;
+    public int tempEspera;
 
     public Processo(String nome, int duracao, int chegada, List<Integer> interrupcao) {
         this.nome = nome;
@@ -29,7 +29,7 @@ public class Processo {
         for (int interrup : interrupcao) {
             result += "instantes de I/O = " + interrup + "\n";
         }
-        
+
         return result;
     }
 }

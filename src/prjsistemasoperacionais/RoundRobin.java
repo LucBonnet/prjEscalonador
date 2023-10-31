@@ -3,7 +3,7 @@ package prjsistemasoperacionais;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoundRobin extends Algoritmo{
+public class RoundRobin extends Algoritmo {
     public int quantum = 4;
 
     public RoundRobin(List<Processo> procs) {
@@ -88,6 +88,7 @@ public class RoundRobin extends Algoritmo{
 
             // Exibir processo na CPU
             System.out.println("CPU: " + atual.nome + "(" + (atual.duracao - atual.temp) + ")");
+            calcTempoEspera();
 
             // Aumenta o tempo do processo
             atual.temp++;
@@ -101,5 +102,12 @@ public class RoundRobin extends Algoritmo{
         System.out.println("-----------------------------------");
         System.out.println("------- Encerrando simulacao ------");
         System.out.println("-----------------------------------");
+
+        System.out.println("\n");
+        System.out.println("Tempo de espera:");
+        for (Processo proc : processos) {
+            System.out.println(proc.nome + ": " + proc.tempEspera);
+        }
+        System.out.println("Tempo de espera médio: " + getTempoEsperaMedio());
     }
 }

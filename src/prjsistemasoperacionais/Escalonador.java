@@ -13,7 +13,7 @@ public class Escalonador {
     public void run() {
         Algoritmo al;
 
-        al = new Fifo(processos);
+        al = new RoundRobin(processos);
 
         al.exec();
     }
