@@ -3,10 +3,9 @@ package prjsistemasoperacionais;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoundRobin extends Algoritmo{
-    public int quantum = 4;
+public class Fifo extends Algoritmo {
 
-    public RoundRobin(List<Processo> procs) {
+    public Fifo(List<Processo> procs) {
         this.processos = procs;
         this.atual = procs.get(0);
         this.cont = 0;
@@ -24,27 +23,13 @@ public class RoundRobin extends Algoritmo{
 
     @Override
     public void exec() {
-        System.out.println("***********************************\n"
-                + "***** ESCALONADOR ROUND ROBIN *****\n"
-                + "-----------------------------------\n"
-                + "------- INICIANDO SIMULACAO -------\n"
-                + "-----------------------------------");
         while (true) {
             System.out.println("********** TEMPO " + instante + " *************");
 
             // Verifica se o acabou o tempo do processo
-            if (this.cont + 1 == quantum) {
-                this.cont = 0;
-                System.out.println("#[evento] FIM QUANTUM <" + atual.nome + ">");
-                if (atual.duracao - atual.temp > 0) {
-                    espera.add(atual);
-                }
-                atual = getNextProcess();
-            } else if (atual.duracao - atual.temp <= 0) {
+            if (atual.duracao - atual.temp <= 0) {
                 System.out.println("#[evento] ENCERRANDO <" + atual.nome + ">");
                 atual = getNextProcess();
-            } else {
-                this.cont++;
             }
 
             // Verifica se o instante atual é interrupção do processo atual

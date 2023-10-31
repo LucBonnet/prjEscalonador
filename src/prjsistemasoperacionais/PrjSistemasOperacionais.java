@@ -41,12 +41,8 @@ public class PrjSistemasOperacionais {
             processos.add(new Processo(PID, duracao, chegada, instantesIO));
         }
 
-//        for (Processo proc : processos) {
-//            System.out.println(proc);
-//        }
-
-          Escalonador esc = new Escalonador(processos);
-          esc.run();
+        Escalonador esc = new Escalonador(processos);
+        esc.run();
     }
 
 }
