@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class PrjSistemasOperacionais {
 
@@ -40,6 +39,8 @@ public class PrjSistemasOperacionais {
 
             processos.add(new Processo(PID, duracao, chegada, instantesIO));
         }
+
+        scan.close();
 
         Escalonador esc = new Escalonador(processos);
         esc.run();
