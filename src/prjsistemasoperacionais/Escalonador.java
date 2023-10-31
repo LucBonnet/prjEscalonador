@@ -1,10 +1,10 @@
 package prjsistemasoperacionais;
 
+import Algoritmo.Algoritmo;
+import Algoritmo.Sjf;
 import java.util.List;
 
-import prjsistemasoperacionais.Algoritmo.Algoritmo;
-import prjsistemasoperacionais.Algoritmo.RoundRobin;
-import prjsistemasoperacionais.Util.Processo;
+import Utils.Processo;
 
 public class Escalonador {
 
@@ -16,8 +16,7 @@ public class Escalonador {
 
     public void run() {
         Algoritmo al;
-
-        al = new RoundRobin(processos);
+        al = new Sjf(processos);
 
         al.exec();
     }

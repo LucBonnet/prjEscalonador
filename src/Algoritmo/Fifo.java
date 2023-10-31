@@ -1,10 +1,10 @@
-package prjsistemasoperacionais.Algoritmo;
+package Algoritmo;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import prjsistemasoperacionais.Util.Processo;
-import prjsistemasoperacionais.Util.Utils;
+import Utils.Processo;
+import Utils.Utils;
 
 public class Fifo extends Algoritmo {
 

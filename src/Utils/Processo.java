@@ -1,4 +1,4 @@
-package prjsistemasoperacionais.Util;
+package Utils;
 
 import java.util.List;
 

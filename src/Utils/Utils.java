@@ -1,4 +1,4 @@
-package prjsistemasoperacionais.Util;
+package Utils;
 
 public class Utils {
     public static void sleep(int s) {

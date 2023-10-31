@@ -1,12 +1,13 @@
-package prjsistemasoperacionais.Algoritmo;
+package Algoritmo;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import prjsistemasoperacionais.Util.Processo;
-import prjsistemasoperacionais.Util.Utils;
+import Utils.Processo;
+import Utils.Utils;
 
 public class Sjf extends Algoritmo {
+
   public Sjf(List<Processo> procs) {
     this.processos = procs;
     this.atual = procs.get(0);
@@ -24,7 +25,7 @@ public class Sjf extends Algoritmo {
   }
 
   @Override
-  protected Processo getNextProcess() {
+  public Processo getNextProcess() {
     this.cont = 0;
     if (espera.isEmpty()) {
       return null;

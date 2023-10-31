@@ -1,8 +1,8 @@
-package prjsistemasoperacionais.Algoritmo;
+package Algoritmo;
 
 import java.util.List;
 
-import prjsistemasoperacionais.Util.Processo;
+import Utils.Processo;
 
 public abstract class Algoritmo {
 
@@ -14,7 +14,7 @@ public abstract class Algoritmo {
     public double tempEsperaMedio;
     protected final int atraso = 1000; // 1000 ms => 1 sec
 
-    protected Processo getNextProcess() {
+    public Processo getNextProcess() {
         this.cont = 0;
         if (espera.isEmpty()) {
             return null;
