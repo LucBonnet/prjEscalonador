@@ -1,6 +1,8 @@
-package prjsistemasoperacionais;
+package prjsistemasoperacionais.Algoritmo;
 
 import java.util.List;
+
+import prjsistemasoperacionais.Util.Processo;
 
 public abstract class Algoritmo {
 

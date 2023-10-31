@@ -2,6 +2,10 @@ package prjsistemasoperacionais;
 
 import java.util.List;
 
+import prjsistemasoperacionais.Algoritmo.Algoritmo;
+import prjsistemasoperacionais.Algoritmo.RoundRobin;
+import prjsistemasoperacionais.Util.Processo;
+
 public class Escalonador {
 
     public List<Processo> processos;

@@ -1,7 +1,10 @@
-package prjsistemasoperacionais;
+package prjsistemasoperacionais.Algoritmo;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import prjsistemasoperacionais.Util.Processo;
+import prjsistemasoperacionais.Util.Utils;
 
 public class RoundRobin extends Algoritmo {
     public int quantum = 4;
