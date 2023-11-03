@@ -1,17 +1,15 @@
 package Algoritmo;
 
 import Telas.Controller;
-import java.util.ArrayList;
-
 import Utils.Processo;
 import Utils.Utils;
+import java.util.ArrayList;
 
-public class RoundRobin extends Algoritmo {
+public class Prioridade extends Algoritmo {
 
-    public int quantum = 4;
-    private final int ALNUM = 1;
+    private final int ALNUM = 4;
 
-    public RoundRobin(Controller con) {
+    public Prioridade(Controller con) {
         this.processos = Utils.getFileInfo();
         this.atual = processos.get(0);
         this.cont = 0;
@@ -29,11 +27,30 @@ public class RoundRobin extends Algoritmo {
         con.criarVisualProcesso(atual.nome, instante, ALNUM);
     }
 
+    private void getNextProcess() {
+        this.cont = 0;
+        if (espera.isEmpty()) {
+            this.atual = null;
+            return;
+        }
+
+        int index = 0;
+        int maiorPrioridade = espera.get(0).prioridade;
+        for (int i = 1; i < espera.size(); i++) {
+            if (espera.get(1).prioridade > maiorPrioridade) {
+                index = i;
+            }
+        }
+
+        this.atual = espera.remove(index);
+        con.criarVisualProcesso(atual.nome, instante, ALNUM);
+    }
+
     @Override
     public void exec() {
         System.out.println("""
                            ***********************************
-                           ***** ESCALONADOR ROUND ROBIN *****
+                           ***** ESCALONADOR  Prioridade *****
                            -----------------------------------
                            ------- INICIANDO SIMULACAO -------
                            -----------------------------------"""
@@ -43,18 +60,9 @@ public class RoundRobin extends Algoritmo {
             System.out.println("********** TEMPO " + instante + " *************");
 
             // Verifica se o acabou o tempo do processo
-            if (this.cont + 1 == quantum) {
-                this.cont = 0;
-                System.out.println("#[evento] FIM QUANTUM <" + atual.nome + ">");
-                if (atual.duracao - atual.temp > 0) {
-                    espera.add(atual);
-                }
-                getNextProcess(ALNUM);
-            } else if (atual.duracao - atual.temp <= 0) {
+            if (atual.duracao - atual.temp <= 0) {
                 System.out.println("#[evento] ENCERRANDO <" + atual.nome + ">");
-                getNextProcess(ALNUM);
-            } else {
-                this.cont++;
+                getNextProcess();
             }
 
             // Verifica se o instante atual é interrupção do processo atual
@@ -65,9 +73,8 @@ public class RoundRobin extends Algoritmo {
                         atual.interrupcao.remove(0);
                         System.out.println("#[evento] OPERACAO I/O <" + atual.nome + ">");
 
-                        getNextProcess(ALNUM);
+                        getNextProcess();
                     }
-
                 }
             }
 
@@ -97,18 +104,17 @@ public class RoundRobin extends Algoritmo {
                 break;
             }
 
-            // Não existe processos na fila de esper
             // Exibir processo na CPU
             System.out.println("CPU: " + atual.nome + "(" + (atual.duracao - atual.temp) + ")");
-            con.aumentaProcesso(ALNUM);
             calcTempoEspera();
 
             // Aumenta o tempo do processo
             atual.temp++;
+            con.aumentaProcesso(ALNUM);
             instante++;
+
             // Espera um segundo
             Utils.sleep(atraso);
-
         }
         System.out.println("ACABARAM OS PROCESSOS!!!");
 

@@ -1,23 +1,28 @@
 package prjsistemasoperacionais;
 
-import Algoritmo.Algoritmo;
-import Algoritmo.Sjf;
-import java.util.List;
+import Algoritmo.*;
+import Telas.Controller;
 
-import Utils.Processo;
+public class Escalonador implements Runnable{
 
-public class Escalonador {
+    public Controller con;
+    public int algoritmo;
 
-    public List<Processo> processos;
-
-    public Escalonador(List<Processo> procs) {
-        this.processos = procs;
+    public Escalonador(Controller con, int algoritmo) {
+        this.con = con;
+        this.algoritmo = algoritmo;
     }
 
+    @Override
     public void run() {
         Algoritmo al;
-        al = new Sjf(processos);
-
+        switch(algoritmo) {
+            case 0 -> al = new RoundRobin(con);
+            case 1 -> al = new Fifo(con);
+            case 2 -> al = new Sjf(con);
+            case 3 -> al = new Prioridade(con);
+            default -> { return; }
+        }
         al.exec();
     }
 }

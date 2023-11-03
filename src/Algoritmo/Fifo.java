@@ -1,43 +1,50 @@
 package Algoritmo;
 
+import Telas.Controller;
 import java.util.ArrayList;
-import java.util.List;
 
 import Utils.Processo;
 import Utils.Utils;
 
 public class Fifo extends Algoritmo {
+    
+    private final int ALNUM = 2;
 
-    public Fifo(List<Processo> procs) {
-        this.processos = procs;
-        this.atual = procs.get(0);
+    public Fifo(Controller con) {
+        this.processos = Utils.getFileInfo();
+        this.atual = processos.get(0);
         this.cont = 0;
+        this.con = con;
         this.espera = new ArrayList<>();
 
         // Atual = primeiro processo em ordem de chegada
-        for (Processo p : procs) {
+        for (Processo p : processos) {
             if (p.chegada < atual.chegada) {
                 atual = p;
             }
         }
 
         this.instante = 0;
+        con.criarVisualProcesso(atual.nome, instante, ALNUM);
     }
 
     @Override
     public void exec() {
-        System.out.println("***********************************\n"
-                + "******** ESCALONADOR  FIFO ********\n"
-                + "-----------------------------------\n"
-                + "------- INICIANDO SIMULACAO -------\n"
-                + "-----------------------------------");
+        System.out.println("""
+                           ***********************************
+                           ******** ESCALONADOR  FIFO ********
+                           -----------------------------------
+                           ------- INICIANDO SIMULACAO -------
+                           -----------------------------------"""
+        );
+        
         while (true) {
             System.out.println("********** TEMPO " + instante + " *************");
 
             // Verifica se o acabou o tempo do processo
             if (atual.duracao - atual.temp <= 0) {
                 System.out.println("#[evento] ENCERRANDO <" + atual.nome + ">");
-                atual = getNextProcess();
+                getNextProcess(ALNUM);
             }
 
             // Verifica se o instante atual é interrupção do processo atual
@@ -48,13 +55,13 @@ public class Fifo extends Algoritmo {
                         atual.interrupcao.remove(0);
                         System.out.println("#[evento] OPERACAO I/O <" + atual.nome + ">");
 
-                        atual = getNextProcess();
+                        getNextProcess(ALNUM);
                     }
                 }
             }
 
             // Adiciona o processo na fila de acordo com a chegada
-            int i = 0;
+            int i;
             for (i = 0; i < processos.size(); i++) {
                 if (processos.get(i).chegada == instante && !atual.nome.equals(processos.get(i).nome)) {
                     System.out.println("#[evento] CHEGADA <" + processos.get(i).nome + ">");
@@ -75,7 +82,7 @@ public class Fifo extends Algoritmo {
             }
 
             // Não existe processos na fila de espera
-            if (atual == null) {
+            if (atual == null) { 
                 break;
             }
 
@@ -85,6 +92,7 @@ public class Fifo extends Algoritmo {
 
             // Aumenta o tempo do processo
             atual.temp++;
+            con.aumentaProcesso(ALNUM);
             instante++;
 
             // Espera um segundo

@@ -7,14 +7,16 @@ public class Processo {
     public String nome;
     public int duracao;
     public int chegada;
+    public int prioridade;
     public List<Integer> interrupcao;
     public int temp;
     public int tempEspera;
 
-    public Processo(String nome, int duracao, int chegada, List<Integer> interrupcao) {
+    public Processo(String nome, int duracao, int chegada, int prioridade, List<Integer> interrupcao) {
         this.nome = nome;
         this.duracao = duracao;
         this.chegada = chegada;
+        this.prioridade = prioridade;
         this.interrupcao = interrupcao;
         this.temp = 0;
     }
