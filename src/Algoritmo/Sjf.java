@@ -15,6 +15,7 @@ public class Sjf extends Algoritmo {
         this.atual = processos.get(0);
         this.cont = 0;
         this.con = con;
+        this.resultado = "";
         this.espera = new ArrayList<>();
 
         // Atual = primeiro processo em ordem de chegada
@@ -48,19 +49,19 @@ public class Sjf extends Algoritmo {
     }
 
     @Override
-    public void exec() {
-        System.out.println("""
+    public String exec() {
+        resultado += """
                        ***********************************
                        ********* ESCALONADOR SJF *********
                        -----------------------------------
                        ------- INICIANDO SIMULACAO -------
-                       -----------------------------------""");
+                       -----------------------------------\n""";
         while (true) {
-            System.out.println("********** TEMPO " + instante + " *************");
+            resultado += "********** TEMPO " + instante + " *************\n";
 
             // Verifica se o acabou o tempo do processo
             if (atual.duracao - atual.temp <= 0) {
-                System.out.println("#[evento] ENCERRANDO <" + atual.nome + ">");
+                resultado += "#[evento] ENCERRANDO <" + atual.nome + ">\n";
                 getNextProcess();
             } else {
                 this.cont++;
@@ -72,7 +73,7 @@ public class Sjf extends Algoritmo {
                     if (atual.interrupcao.get(0) == atual.temp) {
                         espera.add(atual);
                         atual.interrupcao.remove(0);
-                        System.out.println("#[evento] OPERACAO I/O <" + atual.nome + ">");
+                        resultado += "#[evento] OPERACAO I/O <" + atual.nome + ">\n";
 
                         getNextProcess();
                     }
@@ -83,21 +84,21 @@ public class Sjf extends Algoritmo {
             int i;
             for (i = 0; i < processos.size(); i++) {
                 if (processos.get(i).chegada == instante && !atual.nome.equals(processos.get(i).nome)) {
-                    System.out.println("#[evento] CHEGADA <" + processos.get(i).nome + ">");
+                    resultado += "#[evento] CHEGADA <" + processos.get(i).nome + ">\n";
                     espera.add(processos.get(i));
                 }
             }
 
             // Exibir Fila
-            System.out.print("Fila: ");
+            resultado += "Fila: ";
             for (i = 0; i < espera.size(); i++) {
                 Processo p = espera.get(i);
-                System.out.print(p.nome + "(" + (p.duracao - p.temp) + ") ");
+                resultado += p.nome + "(" + (p.duracao - p.temp) + ") ";
             }
             if (i == 0) {
-                System.out.println("Nao ha processos na fila");
+                resultado += "Nao ha processos na fila\n";
             } else {
-                System.out.println("");
+                resultado += "\n";
             }
 
             // Não existe processos na fila de espera
@@ -106,7 +107,7 @@ public class Sjf extends Algoritmo {
             }
 
             // Exibir processo na CPU
-            System.out.println("CPU: " + atual.nome + "(" + (atual.duracao - atual.temp) + ")");
+            resultado += "CPU: " + atual.nome + "(" + (atual.duracao - atual.temp) + ")\n";
             calcTempoEspera();
 
             // Aumenta o tempo do processo
@@ -117,17 +118,19 @@ public class Sjf extends Algoritmo {
             // Espera um segundo
             Utils.sleep(atraso);
         }
-        System.out.println("ACABARAM OS PROCESSOS!!!");
+        resultado += "ACABARAM OS PROCESSOS!!!\n";
 
-        System.out.println("-----------------------------------");
-        System.out.println("------- Encerrando simulacao ------");
-        System.out.println("-----------------------------------");
+        resultado += "-----------------------------------\n";
+        resultado += "------- Encerrando simulacao ------\n";
+        resultado += "-----------------------------------\n";
 
-        System.out.println("\n");
-        System.out.println("Tempo de espera:");
+        resultado += "\n";
+        resultado += "Tempo de espera:\n";
         for (Processo proc : processos) {
-            System.out.println(proc.nome + ": " + proc.tempEspera);
+            resultado += proc.nome + ": " + proc.tempEspera + "\n";
         }
-        System.out.println("Tempo de espera médio: " + getTempoEsperaMedio());
+        resultado += "Tempo de espera médio: " + getTempoEsperaMedio() + "\n\n";
+        
+        return resultado;
     }
 }

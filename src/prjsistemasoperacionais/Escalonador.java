@@ -23,6 +23,7 @@ public class Escalonador implements Runnable{
             case 3 -> al = new Prioridade(con);
             default -> { return; }
         }
-        al.exec();
+        String resultado = al.exec();
+        System.out.println(resultado);
     }
 }

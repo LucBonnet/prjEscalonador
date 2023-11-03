@@ -13,6 +13,7 @@ public abstract class Algoritmo {
     protected List<Processo> processos;
     protected int instante;
     public Processo atual;
+    protected String resultado;
     public double tempEsperaMedio;
     protected final int atraso = 200; // 1000 ms => 1 sec
 
@@ -27,9 +28,7 @@ public abstract class Algoritmo {
         con.criarVisualProcesso(atual.nome, instante, algoritmo);
     }
 
-    public void exec() {
-        
-    }
+    public abstract String exec();
 
     public void calcTempoEspera() {
         for (Processo proc : processos) {
