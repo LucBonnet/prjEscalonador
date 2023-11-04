@@ -122,7 +122,7 @@ public class Prioridade extends Algoritmo {
         resultado += "------- Encerrando simulacao ------\n";
         resultado += "-----------------------------------\n";
 
-        resultado += "\n";
+        resultado += "&&\n";
         resultado += "Tempo de espera:\n";
         for (Processo proc : processos) {
             resultado += proc.nome + ": " + proc.tempEspera + "\n";

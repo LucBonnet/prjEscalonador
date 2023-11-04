@@ -4,32 +4,34 @@ import Utils.Processo;
 import Utils.Utils;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.ScrollPane;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
-import javax.swing.border.Border;
-import prjsistemasoperacionais.Escalonador;
+import prjsistemasoperacionais.Escalona;
 
 public class Controller {
 
     private JPanel panel;
     JScrollPane scPanel;
     private JPanel pnl1, pnl2, pnl3, pnl4;
+    private JTextArea resultado;
 
     private final int altura = 90;
     private final int larSegundo = 30;
     public List<Processo> processos;
     private final Color[] cores = {new Color(244, 67, 54), new Color(33, 150, 243), new Color(76, 175, 80), new Color(255, 193, 7), new Color(156, 39, 176)};
 
-    public Controller(JPanel panel, JScrollPane scPanel) {
+    public Controller(JPanel panel, JScrollPane scPanel, JTextArea resultado) {
         this.panel = panel;
         this.scPanel = scPanel;
+        this.resultado = resultado;
 
         panel.setLayout(null);
-        scPanel.setLayout(null);
     }
 
     private void atualizar() {
@@ -54,16 +56,16 @@ public class Controller {
         Thread thRR, thFIFO, thSJF, thPri;
 
         if (brr) {
-            thRR = new Thread(new Escalonador(this, 0));
+            thRR = new Thread(new Escalona(this, 0));
 
             pnl1 = new JPanel();
             pnl1.setLayout(null);
-            pnl1.setLocation(10, 10 + (cont * altura));
-            pnl1.setSize(1000, altura + 30);
+            pnl1.setLocation(10, 10 + (cont * (altura + 70)));
+            pnl1.setSize(500, altura + 60);
 
             JLabel lbl = new JLabel("Round Robin:");
             lbl.setLocation(0, 0);
-            lbl.setSize(pnl1.getSize().width, 30);
+            lbl.setSize(500, 30);
             lbl.setOpaque(true);
             lbl.setFont(new Font(lbl.getFont().getFamily(), Font.BOLD, 14));
             pnl1.add(lbl);
@@ -76,16 +78,16 @@ public class Controller {
         }
 
         if (bfifo) {
-            thFIFO = new Thread(new Escalonador(this, 1));
+            thFIFO = new Thread(new Escalona(this, 1));
 
             this.pnl2 = new JPanel();
             pnl2.setLayout(null);
-            pnl2.setLocation(10, 10 + (cont * altura + 40));
-            pnl2.setSize(1000, altura + 30);
+            pnl2.setLocation(10, 10 + (cont * (altura + 70)));
+            pnl2.setSize(500, altura + 60);
 
             JLabel lbl = new JLabel("First come, first served (FIFO):");
             lbl.setLocation(0, 0);
-            lbl.setSize(pnl2.getSize().width, 30);
+            lbl.setSize(500, 30);
             lbl.setOpaque(true);
             lbl.setFont(new Font(lbl.getFont().getFamily(), Font.BOLD, 14));
             pnl2.add(lbl);
@@ -98,16 +100,16 @@ public class Controller {
         }
 
         if (bsjf) {
-            thSJF = new Thread(new Escalonador(this, 2));
+            thSJF = new Thread(new Escalona(this, 2));
 
             this.pnl3 = new JPanel();
             pnl3.setLayout(null);
-            pnl3.setLocation(10, 10 + (cont * altura + 40));
-            pnl3.setSize(1000, altura + 30);
+            pnl3.setLocation(10, 10 + (cont * (altura + 70)));
+            pnl3.setSize(500, altura + 60);
 
             JLabel lbl = new JLabel("Shortest job first (SJF):");
             lbl.setLocation(0, 0);
-            lbl.setSize(pnl3.getSize().width, 30);
+            lbl.setSize(500, 30);
             lbl.setOpaque(true);
             lbl.setFont(new Font(lbl.getFont().getFamily(), Font.BOLD, 14));
             pnl3.add(lbl);
@@ -120,16 +122,16 @@ public class Controller {
         }
 
         if (bpri) {
-            thPri = new Thread(new Escalonador(this, 3));
+            thPri = new Thread(new Escalona(this, 3));
 
             this.pnl4 = new JPanel();
             pnl4.setLayout(null);
-            pnl4.setLocation(10, 10 + (cont * altura + 40));
-            pnl4.setSize(1000, altura + 30);
+            pnl4.setLocation(10, 10 + (cont * (altura + 70)));
+            pnl4.setSize(500, altura + 60);
 
             JLabel lbl = new JLabel("Prioridade:");
             lbl.setLocation(0, 0);
-            lbl.setSize(pnl4.getSize().width, 30);
+            lbl.setSize(500, 30);
             lbl.setOpaque(true);
             lbl.setFont(new Font(lbl.getFont().getFamily(), Font.BOLD, 14));
             pnl4.add(lbl);
@@ -169,6 +171,12 @@ public class Controller {
         lbl.setOpaque(true);
         lbl.setBorder(BorderFactory.createLineBorder(cores[getIndice(nome)].darker()));
         pnl.add(lbl);
+        
+        JLabel lblInst = new JLabel(inicio + "");
+        lblInst.setLocation(inicio * larSegundo, 20 + altura + 10);
+        lblInst.setSize(30, 20);
+        pnl.add(lblInst, 0);
+                
         atualizar();
     }
 
@@ -185,9 +193,16 @@ public class Controller {
             case 4 ->
                 pnl = pnl4;
         }
+        
+        pnl.setSize(pnl.getSize().width + larSegundo, pnl.getSize().height);
 
         JLabel lbl = (JLabel) pnl.getComponent(pnl.getComponentCount() - 1);
         lbl.setSize(lbl.getSize().width + larSegundo, lbl.getSize().height);
+    }
+    
+    public void setResultado(String resul) {
+        String resultFormatado = resul.split("&&")[1];
+        resultado.setText(resultado.getText() + resultFormatado);
     }
 
 }

@@ -3,12 +3,12 @@ package prjsistemasoperacionais;
 import Algoritmo.*;
 import Telas.Controller;
 
-public class Escalonador implements Runnable{
+public class Escalona implements Runnable{
 
     public Controller con;
     public int algoritmo;
 
-    public Escalonador(Controller con, int algoritmo) {
+    public Escalona(Controller con, int algoritmo) {
         this.con = con;
         this.algoritmo = algoritmo;
     }
@@ -24,6 +24,8 @@ public class Escalonador implements Runnable{
             default -> { return; }
         }
         String resultado = al.exec();
+        
+        con.setResultado(resultado);
         System.out.println(resultado);
     }
 }

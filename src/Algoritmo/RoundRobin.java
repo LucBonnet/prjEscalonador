@@ -111,17 +111,19 @@ public class RoundRobin extends Algoritmo {
 
         }
         resultado += "ACABARAM OS PROCESSOS!!!\n";
-
         resultado += "-----------------------------------\n";
         resultado += "------- Encerrando simulacao ------\n";
         resultado += "-----------------------------------\n";
 
-        resultado += "\n";
-        resultado += "Tempo de espera:\n";
+        resultado += "&&\n";
+        String tempoEsperaMedio = "";
+        tempoEsperaMedio += "Tempo de espera:\n";
         for (Processo proc : processos) {
-            resultado += proc.nome + ": " + proc.tempEspera + "\n";
+            tempoEsperaMedio += proc.nome + ": " + proc.tempEspera + "\n";
         }
-        resultado += "Tempo de espera médio: " + getTempoEsperaMedio() + "\n\n";
+        tempoEsperaMedio += "Tempo de espera médio: " + getTempoEsperaMedio() + "\n";
+        
+        resultado += tempoEsperaMedio + "\n";
 
         return resultado;
     }

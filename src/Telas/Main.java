@@ -9,7 +9,7 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
-        con = new Controller(pnlMain, scPanel);
+        con = new Controller(pnlMain, scPanel, lblResultado);
     }
 
     /**
@@ -28,6 +28,8 @@ public class Main extends javax.swing.JFrame {
         cbPrioridade = new Telas.JCheckBoxCustom();
         scPanel = new javax.swing.JScrollPane();
         pnlMain = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lblResultado = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -58,7 +60,9 @@ public class Main extends javax.swing.JFrame {
         cbPrioridade.setText("Prioridade");
         cbPrioridade.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
-        scPanel.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        scPanel.setAutoscrolls(true);
+
+        pnlMain.setAutoscrolls(true);
 
         javax.swing.GroupLayout pnlMainLayout = new javax.swing.GroupLayout(pnlMain);
         pnlMain.setLayout(pnlMainLayout);
@@ -68,10 +72,14 @@ public class Main extends javax.swing.JFrame {
         );
         pnlMainLayout.setVerticalGroup(
             pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 647, Short.MAX_VALUE)
+            .addGap(0, 654, Short.MAX_VALUE)
         );
 
         scPanel.setViewportView(pnlMain);
+
+        lblResultado.setColumns(20);
+        lblResultado.setRows(5);
+        jScrollPane1.setViewportView(lblResultado);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -82,7 +90,8 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(scPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 782, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(cbRoundRobin, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(40, 40, 40)
@@ -98,7 +107,9 @@ public class Main extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(scPanel)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnStart, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -162,6 +173,8 @@ public class Main extends javax.swing.JFrame {
     private Telas.JCheckBoxCustom cbPrioridade;
     private Telas.JCheckBoxCustom cbRoundRobin;
     private Telas.JCheckBoxCustom cbSJF;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea lblResultado;
     private javax.swing.JPanel pnlMain;
     private javax.swing.JScrollPane scPanel;
     // End of variables declaration//GEN-END:variables
