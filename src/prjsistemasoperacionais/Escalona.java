@@ -25,7 +25,7 @@ public class Escalona implements Runnable{
         }
         String resultado = al.exec();
         
-        con.setResultado(resultado);
+        con.setResultado(resultado, algoritmo);
         System.out.println(resultado);
     }
 }

@@ -4,9 +4,9 @@ import Utils.Processo;
 import Utils.Utils;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.ScrollPane;
 import java.util.List;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -17,19 +17,26 @@ import prjsistemasoperacionais.Escalona;
 public class Controller {
 
     private JPanel panel;
-    JScrollPane scPanel;
+    private JScrollPane scPanel;
+    private JButton btn;
     private JPanel pnl1, pnl2, pnl3, pnl4;
     private JTextArea resultado;
+    private String rtRR, rtFifo, rtSJF, rtPri;
+    private String rRR, rFifo, rSJF, rPri;
 
     private final int altura = 90;
     private final int larSegundo = 30;
     public List<Processo> processos;
     private final Color[] cores = {new Color(244, 67, 54), new Color(33, 150, 243), new Color(76, 175, 80), new Color(255, 193, 7), new Color(156, 39, 176)};
 
-    public Controller(JPanel panel, JScrollPane scPanel, JTextArea resultado) {
+    public Controller(JPanel panel, JScrollPane scPanel, JTextArea resultado, JButton btn) {
         this.panel = panel;
         this.scPanel = scPanel;
         this.resultado = resultado;
+        this.btn = btn;
+        
+        rRR = rFifo = rSJF = rPri = "";
+        rtRR = rtFifo = rtSJF = rtPri = "";
 
         panel.setLayout(null);
     }
@@ -50,6 +57,7 @@ public class Controller {
     }
 
     public void start(boolean brr, boolean bfifo, boolean bsjf, boolean bpri) {
+        btn.setEnabled(false);
         this.panel.removeAll();
         this.processos = Utils.getFileInfo();
         int cont = 0;
@@ -200,9 +208,34 @@ public class Controller {
         lbl.setSize(lbl.getSize().width + larSegundo, lbl.getSize().height);
     }
     
-    public void setResultado(String resul) {
-        String resultFormatado = resul.split("&&")[1];
-        resultado.setText(resultado.getText() + resultFormatado);
+    public void setResultado(String resul, int algoritmo) {
+        String resultTempo = resul.split("&&")[1];
+        String result = resul.split("&&")[0];
+        switch (algoritmo) {
+            case 0 -> {
+                rtRR = "Round Robin: \n" + resultTempo;
+                rRR = result + "\n";
+            }
+            case 1 -> {
+                rtFifo = "FIFO: \n" + resultTempo;
+                rFifo = result + "\n";
+            }
+            case 2 -> {
+                rtSJF = "SJF: \n" + resultTempo;
+                rSJF = result + "\n";
+            }
+            case 3 -> {
+                rtPri = "Prioridade: \n" + resultTempo;
+                rPri = result + "\n";
+            }
+        }
+        
+        String pathFile = System.getProperty("user.dir") + "/src/prjsistemasoperacionais/saida.txt";
+        Utils.escreveArquivo(rRR + rFifo + rSJF + rPri, pathFile);
+        
+        resultado.setText(rtRR + rtFifo + rtSJF + rtPri);
+        
+        btn.setEnabled(true);
     }
 
 }
