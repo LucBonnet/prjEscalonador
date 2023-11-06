@@ -118,6 +118,8 @@ public class Sjf extends Algoritmo {
             // Espera um segundo
             Utils.sleep(atraso);
         }
+        con.criarVisualProcesso("", instante, ALNUM);
+        
         resultado += "ACABARAM OS PROCESSOS!!!\n";
 
         resultado += "-----------------------------------\n";

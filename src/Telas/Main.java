@@ -9,7 +9,7 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
-        con = new Controller(pnlMain, scPanel, lblResultado, btnStart);
+        con = new Controller(scPanel, lblResultado, btnStart);
     }
 
     /**
@@ -27,7 +27,6 @@ public class Main extends javax.swing.JFrame {
         cbFIFO = new Telas.JCheckBoxCustom();
         cbPrioridade = new Telas.JCheckBoxCustom();
         scPanel = new javax.swing.JScrollPane();
-        pnlMain = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lblResultado = new javax.swing.JTextArea();
 
@@ -60,22 +59,7 @@ public class Main extends javax.swing.JFrame {
         cbPrioridade.setText("Prioridade");
         cbPrioridade.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
-        scPanel.setAutoscrolls(true);
-
-        pnlMain.setAutoscrolls(true);
-
-        javax.swing.GroupLayout pnlMainLayout = new javax.swing.GroupLayout(pnlMain);
-        pnlMain.setLayout(pnlMainLayout);
-        pnlMainLayout.setHorizontalGroup(
-            pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 906, Short.MAX_VALUE)
-        );
-        pnlMainLayout.setVerticalGroup(
-            pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 654, Short.MAX_VALUE)
-        );
-
-        scPanel.setViewportView(pnlMain);
+        scPanel.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         lblResultado.setEditable(false);
         lblResultado.setColumns(20);
@@ -177,7 +161,6 @@ public class Main extends javax.swing.JFrame {
     private Telas.JCheckBoxCustom cbSJF;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea lblResultado;
-    private javax.swing.JPanel pnlMain;
     private javax.swing.JScrollPane scPanel;
     // End of variables declaration//GEN-END:variables
 }

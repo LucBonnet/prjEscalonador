@@ -29,16 +29,16 @@ public class Controller {
     public List<Processo> processos;
     private final Color[] cores = {new Color(244, 67, 54), new Color(33, 150, 243), new Color(76, 175, 80), new Color(255, 193, 7), new Color(156, 39, 176)};
 
-    public Controller(JPanel panel, JScrollPane scPanel, JTextArea resultado, JButton btn) {
-        this.panel = panel;
+    public Controller(JScrollPane scPanel, JTextArea resultado, JButton btn) {
+        this.panel = new JPanel();
         this.scPanel = scPanel;
         this.resultado = resultado;
         this.btn = btn;
-        
-        rRR = rFifo = rSJF = rPri = "";
-        rtRR = rtFifo = rtSJF = rtPri = "";
 
+        panel.setSize(scPanel.getSize().width, scPanel.getSize().height);
+        panel.setAutoscrolls(true);
         panel.setLayout(null);
+        scPanel.setViewportView(panel);
     }
 
     private void atualizar() {
@@ -57,6 +57,8 @@ public class Controller {
     }
 
     public void start(boolean brr, boolean bfifo, boolean bsjf, boolean bpri) {
+        rRR = rFifo = rSJF = rPri = "";
+        rtRR = rtFifo = rtSJF = rtPri = "";
         btn.setEnabled(false);
         this.panel.removeAll();
         this.processos = Utils.getFileInfo();
@@ -174,14 +176,15 @@ public class Controller {
         lbl.setLocation(inicio * larSegundo, 30);
         lbl.setSize(0, altura);
         lbl.setVerticalTextPosition(SwingConstants.CENTER);
-        lbl.setBackground(cores[getIndice(nome)]);
+        Color cor = cores[Math.abs(getIndice(nome)) % cores.length];
+        lbl.setBackground(cor);
         lbl.setForeground(Color.WHITE);
         lbl.setOpaque(true);
-        lbl.setBorder(BorderFactory.createLineBorder(cores[getIndice(nome)].darker()));
+        lbl.setBorder(BorderFactory.createLineBorder(cor.darker()));
         pnl.add(lbl);
         
         JLabel lblInst = new JLabel(inicio + "");
-        lblInst.setLocation(inicio * larSegundo, 20 + altura + 10);
+        lblInst.setLocation(inicio < 10 ? inicio * larSegundo : inicio * larSegundo - 5, 30 + altura);
         lblInst.setSize(30, 20);
         pnl.add(lblInst, 0);
                 
@@ -203,6 +206,7 @@ public class Controller {
         }
         
         pnl.setSize(pnl.getSize().width + larSegundo, pnl.getSize().height);
+        panel.setSize(panel.getSize().width + larSegundo, panel.getSize().height);
 
         JLabel lbl = (JLabel) pnl.getComponent(pnl.getComponentCount() - 1);
         lbl.setSize(lbl.getSize().width + larSegundo, lbl.getSize().height);

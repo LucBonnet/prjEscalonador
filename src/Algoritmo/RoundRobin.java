@@ -110,6 +110,8 @@ public class RoundRobin extends Algoritmo {
             Utils.sleep(atraso);
 
         }
+        con.criarVisualProcesso("", instante, ALNUM);
+        
         resultado += "ACABARAM OS PROCESSOS!!!\n";
         resultado += "-----------------------------------\n";
         resultado += "------- Encerrando simulacao ------\n";
