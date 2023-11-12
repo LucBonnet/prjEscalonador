@@ -3,12 +3,12 @@ package prjsistemasoperacionais;
 import Algoritmo.*;
 import Telas.Controller;
 
-public class Escalona implements Runnable{
+public class Escalonador implements Runnable{
 
     public Controller con;
     public int algoritmo;
 
-    public Escalona(Controller con, int algoritmo) {
+    public Escalonador(Controller con, int algoritmo) {
         this.con = con;
         this.algoritmo = algoritmo;
     }

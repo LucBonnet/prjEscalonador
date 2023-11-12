@@ -33,7 +33,7 @@ public class Fifo extends Algoritmo {
     public String exec() {
         resultado += """
                            ***********************************
-                           ******** ESCALONADOR  FIFO ********
+                           ******** ESCALONADOR  FCFS ********
                            -----------------------------------
                            ------- INICIANDO SIMULACAO -------
                            -----------------------------------\n""";
@@ -95,7 +95,7 @@ public class Fifo extends Algoritmo {
             instante++;
 
             // Espera um segundo
-            Utils.sleep(atraso);
+            Utils.sleep(this.atraso);
         }
         con.criarVisualProcesso("", instante, ALNUM);
         

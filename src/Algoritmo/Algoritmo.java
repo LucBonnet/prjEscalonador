@@ -15,7 +15,7 @@ public abstract class Algoritmo {
     public Processo atual;
     protected String resultado;
     public double tempEsperaMedio;
-    protected final int atraso = 50; // 1000 ms => 1 sec
+    protected final int atraso = 10; // 1000 ms => 1 sec
 
     public void getNextProcess(int algoritmo) {
         this.cont = 0;
@@ -44,7 +44,9 @@ public abstract class Algoritmo {
         for (Processo proc : processos) {
             esperaTotal += proc.tempEspera;
         }
+        
+        double resultado = (double) ((double) esperaTotal / (double)processos.size());
 
-        return esperaTotal / processos.size();
+        return resultado;
     }
 }

@@ -18,11 +18,27 @@ public class Prioridade extends Algoritmo {
         this.espera = new ArrayList<>();
 
         // Atual = primeiro processo em ordem de chegada
+        ArrayList<Processo> chegadas = new ArrayList();
         for (Processo p : processos) {
             if (p.chegada < atual.chegada) {
+                chegadas = new ArrayList<>();
+                
                 atual = p;
             }
+            if(p.chegada == atual.chegada) {
+                chegadas.add(p);
+            }
         }
+        
+        int index = 0;
+        int menorPrioridade = chegadas.get(0).prioridade;
+        for (int i = 1; i < chegadas.size(); i++) {
+            if (chegadas.get(i).prioridade < menorPrioridade) {
+                menorPrioridade = chegadas.get(i).prioridade;
+                index = i;
+            }
+        }
+        atual = chegadas.get(index);
 
         this.instante = 0;
         con.criarVisualProcesso(atual.nome, instante, ALNUM);
@@ -35,10 +51,20 @@ public class Prioridade extends Algoritmo {
             return;
         }
 
+//        int index = 0;
+//        int maiorPrioridade = espera.get(0).prioridade;
+//        for (int i = 1; i < espera.size(); i++) {
+//            if (espera.get(i).prioridade > maiorPrioridade) {
+//                maiorPrioridade = espera.get(i).prioridade;
+//                index = i;
+//            }
+//        }
+        
         int index = 0;
-        int maiorPrioridade = espera.get(0).prioridade;
+        int menorPrioridade = espera.get(0).prioridade;
         for (int i = 1; i < espera.size(); i++) {
-            if (espera.get(1).prioridade > maiorPrioridade) {
+            if (espera.get(i).prioridade < menorPrioridade) {
+                menorPrioridade = espera.get(i).prioridade;
                 index = i;
             }
         }
@@ -114,7 +140,7 @@ public class Prioridade extends Algoritmo {
             instante++;
 
             // Espera um segundo
-            Utils.sleep(atraso);
+            Utils.sleep(this.atraso);
         }
         con.criarVisualProcesso("", instante, ALNUM);
         

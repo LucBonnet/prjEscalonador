@@ -6,10 +6,8 @@ import javax.swing.JFrame;
 
 
 public class PrjSistemasOperacionais {
-
     public static void main(String[] args) throws FileNotFoundException {
          JFrame frame = new Main();
          frame.setVisible(true);    
     }
-
 }

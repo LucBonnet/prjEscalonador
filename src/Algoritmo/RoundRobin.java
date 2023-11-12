@@ -8,7 +8,7 @@ import Utils.Utils;
 
 public class RoundRobin extends Algoritmo {
 
-    public int quantum = 4;
+    public static int quantum = 4;
     private final int ALNUM = 1;
 
     public RoundRobin(Controller con) {

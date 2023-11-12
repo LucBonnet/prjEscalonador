@@ -19,11 +19,27 @@ public class Sjf extends Algoritmo {
         this.espera = new ArrayList<>();
 
         // Atual = primeiro processo em ordem de chegada
+        ArrayList<Processo> chegadas = new ArrayList();
         for (Processo p : processos) {
             if (p.chegada < atual.chegada) {
+                chegadas = new ArrayList<>();
+                
                 atual = p;
+            } 
+            if(p.chegada == atual.chegada) {
+                chegadas.add(p);
             }
         }
+        
+        int index = 0;
+        int menorDuracao = chegadas.get(0).duracao;
+        for (int i = 1; i < chegadas.size(); i++) {
+            if (chegadas.get(i).duracao < menorDuracao) {
+                menorDuracao = chegadas.get(i).duracao;
+                index = i;
+            }
+        }
+        atual = chegadas.get(index);
 
         this.instante = 0;
         con.criarVisualProcesso(atual.nome, instante, ALNUM);
@@ -39,7 +55,8 @@ public class Sjf extends Algoritmo {
         int index = 0;
         int menorDuracao = espera.get(0).duracao;
         for (int i = 1; i < espera.size(); i++) {
-            if (espera.get(1).duracao < menorDuracao) {
+            if (espera.get(i).duracao < menorDuracao) {
+                menorDuracao = espera.get(i).duracao;
                 index = i;
             }
         }
